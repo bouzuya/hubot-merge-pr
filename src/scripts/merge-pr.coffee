@@ -50,7 +50,7 @@ module.exports = (robot) ->
     number = res.match[3]
     res.send [
       'confirm the merging ' + user + '/' + repo + ' number: ' + number
-      'wait ' + timeout + ' sec (if you input "cancel", cancel the merging)'
+      'wait ' + timeout + ' ms (if you input "cancel", cancel the merging)'
     ].join('\n')
     timeoutId = setTimeout ->
       res.send 'merge start'
