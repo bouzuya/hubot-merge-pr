@@ -48,7 +48,7 @@ module.exports = (robot) ->
   formatGetResult = (result) ->
     """
       "#{result.title}"
-      #{result.head.label} <- #{result.base.label}
+      #{result.base.label} <- #{result.head.label}
       #{result.html_url}
     """
 

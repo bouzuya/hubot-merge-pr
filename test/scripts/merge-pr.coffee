@@ -9,9 +9,9 @@ describe 'merge-pr', ->
       html_url: 'https://github.com/hitoridokusho/hibot/pull/1'
       title: 'TITLE'
       head:
-        label: 'hitoridokusho:master'
-      base:
         label: 'bouzuya:add-hubot-merge-pr'
+      base:
+        label: 'hitoridokusho:master'
     @originalDefaultUsername = process.env.HUBOT_MERGE_PR_DEFAULT_USERNAME
     @originalTimeout = process.env.HUBOT_MERGE_PR_TIMEOUT
     process.env.HUBOT_MERGE_PR_DEFAULT_USERNAME = 'hitoridokusho'
