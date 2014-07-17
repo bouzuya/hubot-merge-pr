@@ -19,7 +19,7 @@ or
 ## Commands
 
     bouzuya> hubot help merge-pr
-    hubot> hubot merge-pr <user>/<repos> <pr> - merge a PR
+    hubot> hubot merge-pr <user>/<repos> <pr> - merge a pull request
 
     bouzuya> hubot merge-pr hitoridokusho/hibot 2
     hubot> confirm the merging hitoridokusho/hibot 2
