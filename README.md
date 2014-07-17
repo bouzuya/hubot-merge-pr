@@ -13,6 +13,7 @@ or
 
 ## Configuration
 
+    $ export HUBOT_MERGE_PR_DEFAULT_USERNAME='...'
     $ export HUBOT_MERGE_PR_TIMEOUT='30000'
     $ export HUBOT_MERGE_PR_TOKEN='...'
 
@@ -28,7 +29,7 @@ want to merge a pull request to private repo).
 ## Commands
 
     bouzuya> hubot help merge-pr
-    hubot> hubot merge-pr <user>/<repos> <pr> - merge a pull request
+    hubot> hubot merge-pr [<user>/]<repos> <pr> - merge a pull request
 
     bouzuya> hubot merge-pr hitoridokusho/hibot 2
     hubot> confirm the merging hitoridokusho/hibot 2

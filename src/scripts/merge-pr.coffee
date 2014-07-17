@@ -6,11 +6,12 @@
 #   "q": "^1.0.1"
 #
 # Configuration:
+#   HUBOT_MERGE_PR_DEFAULT_USERNAME
 #   HUBOT_MERGE_PR_TIMEOUT
 #   HUBOT_MERGE_PR_TOKEN
 #
 # Commands:
-#   hubot merge-pr <user>/<repos> <pr> - merge a pull request
+#   hubot merge-pr [<user>/]<repos> <pr> - merge a pull request
 #
 # Author:
 #   bouzuya <m@bouzuya.net>
@@ -23,6 +24,7 @@ module.exports = (robot) ->
   github.authenticate
     type: 'oauth'
     token: process.env.HUBOT_MERGE_PR_TOKEN
+  timeout = parseInt (process.env.HUBOT_MERGE_PR_TIMEOUT ? '30000'), 10
   timeoutId = null
 
   get = (user, repo, number) ->
@@ -58,14 +60,14 @@ module.exports = (robot) ->
       res.send 'canceled'
       timeoutId = null
 
-  robot.respond /merge-pr\s+([^\/]+)\/(\S+)\s+(\d+)$/i, (res) ->
+  robot.respond /merge-pr\s+(([^\/]+)\/)?(\S+)\s+(\d+)$/i, (res) ->
     if timeoutId?
-      res.send 'wait for the merging...'
+      res.send 'wait for merging...'
       return
-    timeout = parseInt (process.env.HUBOT_MERGE_PR_TIMEOUT ? '30000'), 10
-    user = res.match[1]
-    repo = res.match[2]
-    number = parseInt(res.match[3], 10)
+    user = res.match[2] ? process.env.HUBOT_MERGE_PR_DEFAULT_USERNAME
+    return unless user?
+    repo = res.match[3]
+    number = parseInt(res.match[4], 10)
     Promise.resolve()
       .then -> get user, repo, number
       .then (result) ->
