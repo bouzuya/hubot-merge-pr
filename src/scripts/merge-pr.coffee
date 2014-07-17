@@ -19,20 +19,38 @@
 GitHub = require 'github'
 
 module.exports = (robot) ->
+  github = new GitHub version: '3.0.0'
+  github.authenticate
+    type: 'oauth'
+    token: process.env.HUBOT_MERGE_PR_TOKEN
   timeoutId = null
 
-  merge = (user, repo, number) ->
+  get = (user, repo, number) ->
     new Promise (resolve, reject) ->
-      github = new GitHub version: '3.0.0'
-      github.authenticate
-        type: 'oauth'
-        token: process.env.HUBOT_MERGE_PR_TOKEN
-      github.pullRequests.merge
-        user: user, repo: repo, number: parseInt(number, 10), (err, ret) ->
+      github.pullRequests.get
+        user: user, repo: repo, number: number, (err, ret) ->
           if err
             reject(err)
           else
             resolve(ret)
+
+  merge = (user, repo, number) ->
+    new Promise (resolve, reject) ->
+      github.pullRequests.merge
+        user: user, repo: repo, number: number, (err, ret) ->
+          if err
+            reject(err)
+          else
+            resolve(ret)
+
+  formatGetResult = (result) ->
+    """
+      "#{result.title}"
+      #{result.head.label} <- #{result.base.label}
+      #{result.html_url}
+    """
+
+  formatMergeResult = (result) -> result.message
 
   robot.hear /cancel/i, (res) ->
     if timeoutId?
@@ -47,17 +65,22 @@ module.exports = (robot) ->
     timeout = parseInt (process.env.HUBOT_MERGE_PR_TIMEOUT ? '30000'), 10
     user = res.match[1]
     repo = res.match[2]
-    number = res.match[3]
-    res.send [
-      'confirm the merging ' + user + '/' + repo + ' number: ' + number
-      'wait ' + timeout + ' ms (if you input "cancel", cancel the merging)'
-    ].join('\n')
-    timeoutId = setTimeout ->
-      res.send 'merge start'
-      timeoutId = null
-      merge(user, repo, number).then (ret) ->
-        res.send ret.message
+    number = parseInt(res.match[3], 10)
+    Promise.resolve()
+      .then -> get user, repo, number
+      .then (result) ->
+        res.send [
+          formatGetResult(result)
+          ""
+          "i will start to merge after #{timeout} ms"
+          "(you can stop it if you type \"cancel\")"
+        ].join('\n')
+        new Promise (resolve) -> timeoutId = setTimeout resolve, timeout
+      .then ->
+        timeoutId = null
+        merge(user, repo, number)
+      .then (result) ->
+        res.send formatMergeResult(result)
       , (err) ->
         robot.logger.error(err)
         res.send 'merge-pr error'
-    , timeout
