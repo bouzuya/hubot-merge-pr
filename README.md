@@ -32,9 +32,11 @@ want to merge a pull request to private repo).
     hubot> hubot merge-pr [<user>/]<repos> <pr> - merge a pull request
 
     bouzuya> hubot merge-pr hitoridokusho/hibot 2
-    hubot> confirm the merging hitoridokusho/hibot 2
-           wait 30 sec (if you input "cancel", cancel the merging)
-    hubot> merge start
+    hubot> "Test1"
+           hitoridokusho:master <- bouzuya:add-hubot-merge-pr
+           https://github.com/hitoridokusho/hibot/pull/3
+           i will start to merge after 30000 ms
+           (you can stop it if you type "cancel")
     hubot> Pull Request successfully merged
 
 ## License
