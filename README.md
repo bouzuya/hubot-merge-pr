@@ -16,6 +16,15 @@ or
     $ export HUBOT_MERGE_PR_TIMEOUT='30000'
     $ export HUBOT_MERGE_PR_TOKEN='...'
 
+### How to generate a token
+
+[See GitHub help documentation][how-to-generate-a-token].
+
+The scope required for using hubot-merge-pr is "public_repo" or "repo" (if you
+want to merge a pull request to private repo).
+
+[how-to-generate-a-token]: https://help.github.com/articles/creating-an-access-token-for-command-line-use
+
 ## Commands
 
     bouzuya> hubot help merge-pr
