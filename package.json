@@ -1,6 +1,6 @@
 {
   "name": "hubot-merge-pr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Hubot script for merging a pull request",
   "main": "index.js",
   "scripts": {
