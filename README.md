@@ -1,3 +1,7 @@
+# DEPRECATION WARNING
+
+**THIS PROJECT IS NO LONGER SUPPORTED. YOU SHOULD USE THE [bouzuya/hubot-pr][] INSTEAD.**
+
 # hubot-merge-pr
 
 A Hubot script for merging a pull request
@@ -49,3 +53,4 @@ MIT
 
 [travis]: https://travis-ci.org/bouzuya/hubot-merge-pr
 [travis-status]: https://travis-ci.org/bouzuya/hubot-merge-pr.svg?branch=master
+[bouzuya/hubot-pr]: https://github.com/bouzuya/hubot-pr
